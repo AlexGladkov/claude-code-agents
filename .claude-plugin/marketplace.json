@@ -1,0 +1,20 @@
+{
+  "name": "kotlin-agents-marketplace",
+  "owner": {
+    "name": "Alex Gladkov"
+  },
+  "metadata": {
+    "description": "Marketplace for Kotlin development agents",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "kotlin-agents",
+      "description": "Specialized AI agents for Kotlin/Spring Boot backend and Compose Multiplatform development",
+      "version": "1.0.0",
+      "source": "./",
+      "category": "development",
+      "tags": ["kotlin", "spring-boot", "compose", "android"]
+    }
+  ]
+}
