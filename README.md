@@ -1,6 +1,15 @@
-# Kotlin Agents for Claude Code
+# Claude Code Agents
 
-Specialized AI agents for Kotlin/Spring Boot backend and Compose Multiplatform development.
+Specialized AI agents for Claude Code — organized by domain.
+
+## Repository Structure
+
+```
+agents/
+├── coding/
+│   └── kotlin/          # Kotlin / Spring Boot / Compose Multiplatform agents
+└── education/           # Educational agents (coming soon)
+```
 
 ## Installation
 
@@ -29,6 +38,10 @@ git clone https://github.com/AlexGladkov/claude-code-agents.git
 
 ## Available Agents
 
+### Coding / Kotlin
+
+Located in `agents/coding/kotlin/`
+
 | Agent | Description |
 |-------|-------------|
 | **init-kotlin** | Repository bootstrap for clean Kotlin Spring Boot or full-stack (Spring + Compose) projects |
@@ -41,8 +54,13 @@ git clone https://github.com/AlexGladkov/claude-code-agents.git
 | **security-kotlin** | OWASP security auditing for Spring Boot with comprehensive vulnerability scanning |
 | **devops-orchestrator** | Docker environment setup, multi-env configs, CI/CD pipelines, automated deployments |
 | **system-analytics** | Technical specification generation from user requests, saved as structured Markdown |
+| **kotlin-multiplatform-developer** | Full KMP feature slice generator (domain + data + presentation) with feature-sliced architecture |
 
-## Development Workflow
+### Education
+
+Located in `agents/education/` — coming soon.
+
+## Development Workflow (Kotlin)
 
 These agents cover the complete development lifecycle:
 
@@ -93,7 +111,7 @@ These agents cover the complete development lifecycle:
 
 ## Contributing
 
-To suggest a new subagent, open a Pull Request with a markdown file following the existing agent patterns in `agents/`.
+To suggest a new subagent, open a Pull Request with a markdown file in the appropriate category folder under `agents/`.
 
 ## License
 
