@@ -1,0 +1,12 @@
+# Generated harness files
+generated/
+.cursorrules
+.windsurfrules
+.github/copilot-instructions.md
+AGENTS.md
+
+# Generated files inside plugins
+plugins/*/generated/
+
+# OS
+.DS_Store

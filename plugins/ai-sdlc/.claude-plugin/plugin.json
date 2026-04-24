@@ -1,7 +1,7 @@
 {
-  "name": "kotlin-agents",
+  "name": "ai-sdlc",
   "version": "1.0.0",
-  "description": "Specialized AI agents for Kotlin/Spring Boot backend and Compose Multiplatform development",
+  "description": "AI-powered SDLC agents for Kotlin/Spring Boot backend and Compose Multiplatform development",
   "author": {
     "name": "Alex Gladkov",
     "url": "https://github.com/AlexGladkov"

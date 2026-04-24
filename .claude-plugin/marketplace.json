@@ -1,20 +1,28 @@
 {
-  "name": "kotlin-agents-marketplace",
+  "name": "claude-code-agents",
   "owner": {
     "name": "Alex Gladkov"
   },
   "metadata": {
-    "description": "Marketplace for Kotlin development agents",
-    "version": "1.0.0"
+    "description": "Marketplace for Kotlin development agents and AI University",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "kotlin-agents",
-      "description": "Specialized AI agents for Kotlin/Spring Boot backend and Compose Multiplatform development",
+      "name": "ai-sdlc",
+      "description": "AI-powered SDLC agents for Kotlin/Spring Boot backend and Compose Multiplatform development",
       "version": "1.0.0",
-      "source": "./",
+      "source": "../plugins/ai-sdlc",
       "category": "development",
-      "tags": ["kotlin", "spring-boot", "compose", "android"]
+      "tags": ["kotlin", "spring-boot", "compose", "android", "sdlc"]
+    },
+    {
+      "name": "ai-university",
+      "description": "AI University — virtual university with AI teaching agents for medicine, AI/ML, and more",
+      "version": "1.0.0",
+      "source": "../plugins/ai-university",
+      "category": "education",
+      "tags": ["education", "university", "ai-ml", "medicine", "teaching"]
     }
   ]
 }

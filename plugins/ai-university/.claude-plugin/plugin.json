@@ -1,0 +1,19 @@
+{
+  "name": "ai-university",
+  "version": "1.0.0",
+  "description": "AI University — virtual university with AI teaching agents for medicine, AI/ML, and more",
+  "author": {
+    "name": "Alex Gladkov",
+    "url": "https://github.com/AlexGladkov"
+  },
+  "repository": "https://github.com/AlexGladkov/claude-code-agents",
+  "license": "MIT",
+  "keywords": [
+    "education",
+    "university",
+    "ai-ml",
+    "medicine",
+    "teaching",
+    "learning"
+  ]
+}

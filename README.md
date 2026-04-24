@@ -1,14 +1,33 @@
 # Claude Code Agents
 
-Specialized AI agents for Claude Code — organized by domain.
+Specialized AI agents for Claude Code — organized by domain. Multi-plugin marketplace.
 
 ## Repository Structure
 
 ```
-agents/
-├── coding/
-│   └── kotlin/          # Kotlin / Spring Boot / Compose Multiplatform agents
-└── education/           # Educational agents (coming soon)
+claude-code-agents/
+├── .claude-plugin/
+│   └── marketplace.json          # Marketplace catalog (2 plugins)
+├── plugins/
+│   ├── ai-sdlc/                  # Plugin: AI-powered SDLC agents
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   └── agents/
+│   └── ai-university/            # Plugin: AI University
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── skills/study/SKILL.md # /ai-university:study skill
+│       ├── agents/education/
+│       ├── config/
+│       └── scripts/
+├── agents/                       # Original agent files (for direct use)
+│   ├── coding/kotlin/
+│   └── education/
+├── config/
+│   └── university.yaml
+├── scripts/
+│   └── generate-harness.sh
+└── README.md
 ```
 
 ## Installation
@@ -19,8 +38,9 @@ agents/
 # Add the marketplace
 /plugin marketplace add https://github.com/AlexGladkov/claude-code-agents
 
-# Install the plugin
-/plugin install kotlin-agents
+# Install individual plugins
+/plugin install ai-sdlc
+/plugin install ai-university
 ```
 
 ### Option 2: Install from Local Clone
@@ -32,9 +52,17 @@ git clone https://github.com/AlexGladkov/claude-code-agents.git
 # Add the local marketplace
 /plugin marketplace add ./claude-code-agents
 
-# Install the plugin
-/plugin install kotlin-agents
+# Install individual plugins
+/plugin install ai-sdlc
+/plugin install ai-university
 ```
+
+### Available Plugins
+
+| Plugin | Description |
+|--------|-------------|
+| **ai-sdlc** | AI-powered SDLC agents for Kotlin/Spring Boot + Compose Multiplatform |
+| **ai-university** | AI University — teaching agents for medicine, AI/ML |
 
 ## Available Agents
 
@@ -56,9 +84,103 @@ Located in `agents/coding/kotlin/`
 | **system-analytics** | Technical specification generation from user requests, saved as structured Markdown |
 | **kotlin-multiplatform-developer** | Full KMP feature slice generator (domain + data + presentation) with feature-sliced architecture |
 
-### Education
+### Education / University
 
-Located in `agents/education/` — coming soon.
+The education agents are organized as a virtual university with a 4-level hierarchy:
+
+```
+University → Faculty → Department → Discipline (agent)
+```
+
+The university structure is defined in `config/university.yaml` (source-of-truth).
+
+**Quick start:**
+
+```bash
+# Generate instruction files for your AI tool
+./scripts/generate-harness.sh
+
+# Generate and install (e.g., for Claude Code)
+./scripts/generate-harness.sh --install --only claude
+```
+
+Supported AI tools: Claude Code, Cursor, GitHub Copilot, Windsurf, Codex/OpenCode.
+
+**Current structure:**
+
+| Faculty | Department | Disciplines | Hours |
+|---------|-----------|-------------|-------|
+| Medical (medicine) | Biology | Anatomy, Physiology, Neurobiology | 360 |
+| AI/ML (ai-ml) | AI SDLC | Prompting, MCP, RAG, Local AI, AI Security, CV, AI Agents, MLOps | 560 |
+| AI/ML (ai-ml) | ML Foundations | Classical ML, Deep Learning, Transformers, Fuzzy Logic, Optimization, Generative Models, RL, RNN/TimeSeries, Graph NN | 700 |
+| Robotics (robotics) | Robot Fundamentals | Kinematics & Dynamics, Sensors & Actuators, Control Systems, Electronics & MCU, Robot Math | 360 |
+| Robotics (robotics) | Applied Robotics | ROS 2, Robot Vision, Motion Planning, SLAM, Simulation & Digital Twins | 360 |
+
+**Key agents:**
+
+| Agent | Description |
+|-------|-------------|
+| **rector** | University rector — top-level orchestrator, study plans, cross-faculty programs, progress aggregation |
+
+**Medical / Biology:**
+
+| Agent | Description |
+|-------|-------------|
+| **department-head** | Department head — learning orchestrator, prerequisites, interdisciplinary checks |
+| **anatomy-teacher** | Human anatomy — systemic, clinical, topographic |
+| **physiology-teacher** | Human physiology — all organ systems |
+| **neurobiology-teacher** | Neurobiology — cellular and systems |
+
+**AI/ML / AI SDLC:**
+
+| Agent | Description |
+|-------|-------------|
+| **ai-sdlc-department-head** | Department head — AI SDLC learning orchestrator |
+| **prompting-teacher** | Prompt engineering, state & context management |
+| **mcp-teacher** | Model Context Protocol — servers, tools, transports |
+| **rag-teacher** | RAG & Embeddings — retrieval, vector DB, chunking |
+| **local-ai-teacher** | Local AI — Ollama, llama.cpp, vLLM, quantization |
+| **ai-security-teacher** | AI Security — OWASP LLM Top 10, prompt injection, red teaming |
+| **cv-teacher** | Computer Vision — CNN, detection, segmentation, VLM |
+| **ai-agents-teacher** | AI Agents — tool use, ReAct, multi-agent, memory |
+| **mlops-teacher** | MLOps — serving, monitoring, pipelines, CI/CD |
+
+**AI/ML / ML Foundations:**
+
+| Agent | Description |
+|-------|-------------|
+| **ml-foundations-department-head** | Department head — ML Foundations learning orchestrator |
+| **classical-ml-teacher** | Classical ML — SVM, trees, ensembles, clustering, feature engineering |
+| **deep-learning-teacher** | Deep Learning — backprop, CNN, optimizers, transfer learning |
+| **transformers-teacher** | Encoder/Decoder & Transformers — attention, BERT/GPT/T5, tokenization |
+| **fuzzy-logic-teacher** | Fuzzy Logic — fuzzy sets, Mamdani/Sugeno, ANFIS, neuro-fuzzy |
+| **optimization-teacher** | Optimization & Learning Theory — convex/non-convex, PAC-learning, VC-dimension |
+| **generative-models-teacher** | Generative Models — VAE, GAN, Diffusion, Flow-based |
+| **reinforcement-learning-teacher** | Reinforcement Learning — MDP, DQN, PPO, RLHF, multi-agent |
+| **rnn-timeseries-teacher** | RNN & Time Series — LSTM, GRU, TFT, forecasting, anomaly detection |
+| **graph-nn-teacher** | Graph Neural Networks — GCN, GAT, knowledge graphs, molecular ML |
+
+**Robotics / Fundamentals:**
+
+| Agent | Description |
+|-------|-------------|
+| **robot-fundamentals-department-head** | Department head — robotics fundamentals orchestrator |
+| **kinematics-dynamics-teacher** | Kinematics & dynamics — DH, Jacobians, mobile robots |
+| **sensors-actuators-teacher** | Sensors & actuators — LiDAR, IMU, motors, sensor fusion |
+| **control-systems-teacher** | Control systems — PID, LQR, adaptive, robust, real-time |
+| **electronics-mcu-teacher** | Electronics & MCU — STM32, ESP32, protocols, PCB, embedded Linux |
+| **robot-math-teacher** | Math for robotics — SO(3)/SE(3), quaternions, Bayesian, optimization |
+
+**Robotics / Applied:**
+
+| Agent | Description |
+|-------|-------------|
+| **applied-robotics-department-head** | Department head — applied robotics orchestrator |
+| **ros2-teacher** | ROS 2 — DDS, Nav2, MoveIt 2, tf2, lifecycle |
+| **robot-vision-teacher** | Robot vision — stereo, VO, 3D reconstruction, segmentation |
+| **motion-planning-teacher** | Motion planning — RRT, A*, MoveIt, behavior trees, multi-robot |
+| **slam-teacher** | SLAM — LiDAR/visual/multi-sensor SLAM, graph optimization |
+| **simulation-teacher** | Simulation — Gazebo, Isaac Sim, MuJoCo, sim-to-real, digital twins |
 
 ## Development Workflow (Kotlin)
 
