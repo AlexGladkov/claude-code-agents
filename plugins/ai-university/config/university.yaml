@@ -1,0 +1,311 @@
+university:
+  name: "AI University"
+  description: "Университет с AI-преподавателями. Расширяемая структура: факультеты, кафедры, дисциплины."
+
+  faculties:
+    - id: medicine
+      title: "Медицинский факультет"
+      description: "Фундаментальная и клиническая медицина"
+
+      departments:
+        - id: biology
+          title: "Кафедра биологии"
+          description: "Биологические науки для медиков"
+          head: department-head
+          head-file: agents/education/biology/department-head.md
+
+          disciplines:
+            - name: anatomy-teacher
+              title: "Анатомия человека"
+              description: "Системная, клиническая и топографическая анатомия, рентгенанатомия, эмбриология"
+              agent-file: agents/education/biology/anatomy-teacher.md
+              hours: 120
+              competencies:
+                - "Знание анатомической терминологии (рус + лат)"
+                - "Описание строения органов и систем"
+                - "Топографические отношения структур"
+                - "Клинические корреляции анатомических знаний"
+                - "Чтение анатомических атласов и рентгенограмм"
+
+            - name: physiology-teacher
+              title: "Физиология человека"
+              description: "Нормальная физиология всех систем организма"
+              agent-file: agents/education/biology/physiology-teacher.md
+              hours: 140
+              competencies:
+                - "Понимание механизмов регуляции функций"
+                - "Интерпретация физиологических показателей"
+                - "Объяснение патофизиологических процессов"
+                - "Расчёт физиологических параметров"
+
+            - name: neurobiology-teacher
+              title: "Нейробиология"
+              description: "Клеточная и системная нейробиология"
+              agent-file: agents/education/biology/neurobiology-teacher.md
+              hours: 100
+              competencies:
+                - "Понимание нейронных механизмов"
+                - "Синаптическая передача и пластичность"
+                - "Сенсорные и моторные системы"
+                - "Основы нейрофармакологии"
+                - "Высшие функции мозга"
+
+    - id: ai-ml
+      title: "Факультет AI/ML"
+      description: "Искусственный интеллект и машинное обучение — от промптинга до продакшена"
+
+      departments:
+        - id: ai-sdlc
+          title: "Кафедра AI SDLC"
+          description: "Полный цикл разработки AI-систем: от проектирования до деплоя и мониторинга"
+          head: ai-sdlc-department-head
+          head-file: agents/education/ai-ml/ai-sdlc/department-head.md
+
+          disciplines:
+            - name: prompting-teacher
+              title: "Промптинг, State & Context Management"
+              description: "Prompt engineering, управление состоянием и контекстным окном LLM"
+              agent-file: agents/education/ai-ml/ai-sdlc/prompting-teacher.md
+              hours: 80
+              competencies:
+                - "Написание эффективных системных промптов"
+                - "Chain-of-thought и few-shot стратегии"
+                - "Управление контекстным окном"
+                - "State management в мультитурновых диалогах"
+                - "Оценка и итерация промптов"
+
+            - name: mcp-teacher
+              title: "Model Context Protocol"
+              description: "MCP — серверы, инструменты, ресурсы, транспорты, интеграция с LLM"
+              agent-file: agents/education/ai-ml/ai-sdlc/mcp-teacher.md
+              hours: 60
+              competencies:
+                - "Архитектура MCP (клиент-сервер)"
+                - "Создание MCP-серверов и инструментов"
+                - "Ресурсы и промпт-шаблоны MCP"
+                - "Транспорты (stdio, SSE, Streamable HTTP)"
+                - "Интеграция MCP с AI-агентами"
+
+            - name: rag-teacher
+              title: "RAG & Embeddings"
+              description: "Retrieval-Augmented Generation, embedding-модели, vector DB, retrieval-стратегии"
+              agent-file: agents/education/ai-ml/ai-sdlc/rag-teacher.md
+              hours: 80
+              competencies:
+                - "Архитектура RAG-пайплайнов"
+                - "Chunking-стратегии и препроцессинг"
+                - "Embedding-модели и similarity search"
+                - "Vector databases (Chroma, Pinecone, Weaviate)"
+                - "Re-ranking и гибридный поиск"
+                - "Оценка качества retrieval"
+
+            - name: local-ai-teacher
+              title: "Local AI"
+              description: "Локальный деплой моделей — Ollama, llama.cpp, vLLM, квантизация, hardware"
+              agent-file: agents/education/ai-ml/ai-sdlc/local-ai-teacher.md
+              hours: 60
+              competencies:
+                - "Развёртывание моделей локально (Ollama, llama.cpp)"
+                - "Квантизация моделей (GGUF, GPTQ, AWQ)"
+                - "Выбор hardware под задачу (GPU/CPU/Apple Silicon)"
+                - "Serving с vLLM и TGI"
+                - "Оптимизация инференса"
+
+            - name: ai-security-teacher
+              title: "AI Security"
+              description: "Безопасность AI-систем — prompt injection, guardrails, red teaming, OWASP LLM Top 10"
+              agent-file: agents/education/ai-ml/ai-sdlc/ai-security-teacher.md
+              hours: 60
+              competencies:
+                - "OWASP LLM Top 10"
+                - "Prompt injection и jailbreak-атаки"
+                - "Guardrails и фильтрация"
+                - "Red teaming AI-систем"
+                - "Data poisoning и supply chain"
+                - "Privacy и PII в LLM"
+
+            - name: cv-teacher
+              title: "Computer Vision"
+              description: "Компьютерное зрение — CNN, детекция, сегментация, OCR, vision-language модели"
+              agent-file: agents/education/ai-ml/ai-sdlc/cv-teacher.md
+              hours: 80
+              competencies:
+                - "Архитектуры CNN (ResNet, EfficientNet, ViT)"
+                - "Object detection (YOLO, DETR)"
+                - "Семантическая и instance сегментация"
+                - "OCR и документ-процессинг"
+                - "Vision-Language модели (GPT-4V, Claude Vision)"
+                - "Препроцессинг и аугментация данных"
+
+            - name: ai-agents-teacher
+              title: "AI Agents"
+              description: "Мультиагентные системы — tool use, планирование, ReAct, оркестрация, memory"
+              agent-file: agents/education/ai-ml/ai-sdlc/ai-agents-teacher.md
+              hours: 80
+              competencies:
+                - "Архитектура AI-агентов"
+                - "Tool use и function calling"
+                - "Паттерны: ReAct, Plan-and-Execute, Reflection"
+                - "Мультиагентная оркестрация"
+                - "Memory и персистентность"
+                - "Evaluation и debugging агентов"
+
+            - name: mlops-teacher
+              title: "MLOps"
+              description: "ML Operations — model serving, мониторинг, drift detection, пайплайны, CI/CD для моделей"
+              agent-file: agents/education/ai-ml/ai-sdlc/mlops-teacher.md
+              hours: 60
+              competencies:
+                - "Model serving (FastAPI, Triton, BentoML)"
+                - "A/B тестирование моделей"
+                - "Мониторинг и drift detection"
+                - "ML-пайплайны (Airflow, Prefect, Kubeflow)"
+                - "CI/CD для моделей"
+                - "Model registry и версионирование"
+
+        - id: ml-foundations
+          title: "Кафедра AI/ML Foundations"
+          description: "Фундаментальные основы машинного обучения: от классических алгоритмов до генеративных моделей и RL"
+          head: ml-foundations-department-head
+          head-file: agents/education/ai-ml/ml-foundations/department-head.md
+
+          disciplines:
+            - name: classical-ml-teacher
+              title: "Классический ML"
+              description: "Классические алгоритмы ML — SVM, деревья, ансамбли, кластеризация, feature engineering"
+              agent-file: agents/education/ai-ml/ml-foundations/classical-ml-teacher.md
+              hours: 100
+              competencies:
+                - "SVM и kernel-методы"
+                - "Деревья решений и ансамбли (XGBoost, CatBoost, Random Forest)"
+                - "Кластеризация (K-Means, DBSCAN, hierarchical)"
+                - "Dimensionality reduction (PCA, t-SNE, UMAP)"
+                - "Feature engineering и pipelines"
+
+            - name: deep-learning-teacher
+              title: "Нейросети и глубокое обучение"
+              description: "Архитектуры нейросетей, backpropagation, оптимизация, CNN, transfer learning"
+              agent-file: agents/education/ai-ml/ml-foundations/deep-learning-teacher.md
+              hours: 100
+              competencies:
+                - "Backpropagation и вычислительные графы"
+                - "Активации, инициализация, BatchNorm, dropout"
+                - "CNN архитектуры (ResNet, U-Net, EfficientNet)"
+                - "Оптимизаторы (Adam, SGD, LAMB) и LR schedules"
+                - "Transfer learning и fine-tuning"
+
+            - name: transformers-teacher
+              title: "Encoder/Decoder и трансформеры"
+              description: "Seq2seq, attention, Transformer, BERT/GPT/T5, токенизация, scaling laws"
+              agent-file: agents/education/ai-ml/ml-foundations/transformers-teacher.md
+              hours: 80
+              competencies:
+                - "Seq2seq и механизмы attention (Bahdanau, Luong)"
+                - "Архитектура Transformer (encoder/decoder)"
+                - "BERT, GPT, T5 — encoder-only, decoder-only, encoder-decoder"
+                - "Positional encoding и токенизация (BPE, SentencePiece)"
+                - "Scaling laws и эмерджентные свойства"
+
+            - name: fuzzy-logic-teacher
+              title: "Нечёткая логика и нейро-фаззи"
+              description: "Fuzzy sets, нечёткий вывод, ANFIS, нейро-фаззи гибриды, нечёткие контроллеры"
+              agent-file: agents/education/ai-ml/ml-foundations/fuzzy-logic-teacher.md
+              hours: 60
+              competencies:
+                - "Нечёткие множества и функции принадлежности"
+                - "Нечёткий вывод (Mamdani, Sugeno)"
+                - "ANFIS и нейро-фаззи гибриды"
+                - "Нечёткие контроллеры"
+                - "Decision making с нечёткой логикой"
+
+            - name: optimization-teacher
+              title: "Оптимизация и теория обучения"
+              description: "Convex/non-convex оптимизация, регуляризация, PAC-learning, теория обобщения"
+              agent-file: agents/education/ai-ml/ml-foundations/optimization-teacher.md
+              hours: 80
+              competencies:
+                - "Convex и non-convex оптимизация"
+                - "SGD convergence и варианты"
+                - "Регуляризация (L1/L2/Elastic Net)"
+                - "Bias-variance tradeoff"
+                - "PAC-learning, VC-dimension, generalization bounds"
+
+            - name: generative-models-teacher
+              title: "Генеративные модели"
+              description: "VAE, GAN, Diffusion models, Flow-based models, autoregressive модели"
+              agent-file: agents/education/ai-ml/ml-foundations/generative-models-teacher.md
+              hours: 80
+              competencies:
+                - "VAE — архитектура, ELBO, reparameterization trick"
+                - "GAN (DCGAN, StyleGAN, WGAN) — обучение, mode collapse"
+                - "Diffusion models (DDPM, Stable Diffusion, score matching)"
+                - "Flow-based models (RealNVP, Glow)"
+                - "Autoregressive модели"
+
+            - name: reinforcement-learning-teacher
+              title: "Reinforcement Learning"
+              description: "MDP, Q-learning, policy gradient, PPO, Actor-Critic, RLHF, multi-agent RL"
+              agent-file: agents/education/ai-ml/ml-foundations/reinforcement-learning-teacher.md
+              hours: 80
+              competencies:
+                - "MDP, Bellman equation, Q-learning, DQN"
+                - "Policy gradient и REINFORCE"
+                - "PPO и Actor-Critic"
+                - "RLHF — обучение с обратной связью от человека"
+                - "Multi-agent RL и sim-to-real"
+
+            - name: rnn-timeseries-teacher
+              title: "Рекуррентные сети и временные ряды"
+              description: "RNN, LSTM, GRU, Temporal Fusion Transformer, forecasting, anomaly detection"
+              agent-file: agents/education/ai-ml/ml-foundations/rnn-timeseries-teacher.md
+              hours: 60
+              competencies:
+                - "RNN, LSTM, GRU — архитектура и обучение"
+                - "Temporal Fusion Transformer"
+                - "Time series forecasting"
+                - "Sequence labeling"
+                - "Anomaly detection во временных рядах"
+
+            - name: graph-nn-teacher
+              title: "Графовые нейросети"
+              description: "GNN, GCN, GAT, message passing, knowledge graphs, молекулярный ML"
+              agent-file: agents/education/ai-ml/ml-foundations/graph-nn-teacher.md
+              hours: 60
+              competencies:
+                - "GNN, GCN, GAT, GraphSAGE"
+                - "Message passing и агрегация"
+                - "Node/edge/graph classification"
+                - "Knowledge graphs и link prediction"
+                - "Молекулярный ML"
+
+    # Пример расширения — раскомментируйте и адаптируйте:
+    #
+    # - id: computer-science
+    #   title: "Факультет информатики"
+    #   description: "Компьютерные науки и программирование"
+    #   departments:
+    #     - id: programming
+    #       title: "Кафедра программирования"
+    #       disciplines:
+    #         - name: kotlin-teacher
+    #           title: "Kotlin"
+    #           agent-file: agents/education/cs/kotlin-teacher.md
+    #           hours: 80
+    #           competencies:
+    #             - "Базовый синтаксис Kotlin"
+
+  # Межфакультетские программы
+  cross-faculty-programs: []
+    # Пример:
+    #
+    # - id: bioinformatics
+    #   title: "Биоинформатика"
+    #   description: "Междисциплинарная программа на стыке IT и биологии"
+    #   faculties: [medicine, computer-science]
+    #   disciplines:
+    #     - neurobiology-teacher
+    #     - kotlin-teacher
+    #   hours: 200
+    #   competencies:
+    #     - "Анализ биологических данных"
+    #     - "Программирование для биологов"
