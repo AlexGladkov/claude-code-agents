@@ -163,6 +163,19 @@ university:
                 - "CI/CD для моделей"
                 - "Model registry и версионирование"
 
+            - name: ai-ethics-teacher
+              title: "Этика и ответственный AI"
+              description: "Bias и fairness, alignment, интерпретируемость, AI governance, EU AI Act, ответственная разработка"
+              agent-file: agents/education/ai-ml/ai-sdlc/ai-ethics-teacher.md
+              hours: 60
+              competencies:
+                - "Типы bias в ML-пайплайне и методы митигации"
+                - "Математические определения fairness (demographic parity, equalized odds)"
+                - "Интерпретируемость и объяснимость (SHAP, LIME, mechanistic)"
+                - "AI Alignment: RLHF, Constitutional AI, scalable oversight"
+                - "AI Governance и регулирование (EU AI Act, NIST AI RMF)"
+                - "Ответственная разработка: model cards, impact assessments, мониторинг"
+
         - id: ml-foundations
           title: "Кафедра AI/ML Foundations"
           description: "Фундаментальные основы машинного обучения: от классических алгоритмов до генеративных моделей и RL"
@@ -278,34 +291,214 @@ university:
                 - "Knowledge graphs и link prediction"
                 - "Молекулярный ML"
 
-    # Пример расширения — раскомментируйте и адаптируйте:
-    #
-    # - id: computer-science
-    #   title: "Факультет информатики"
-    #   description: "Компьютерные науки и программирование"
-    #   departments:
-    #     - id: programming
-    #       title: "Кафедра программирования"
-    #       disciplines:
-    #         - name: kotlin-teacher
-    #           title: "Kotlin"
-    #           agent-file: agents/education/cs/kotlin-teacher.md
-    #           hours: 80
-    #           competencies:
-    #             - "Базовый синтаксис Kotlin"
+            - name: causal-inference-teacher
+              title: "Причинно-следственный вывод"
+              description: "Структурные каузальные модели (SCM), do-исчисление, контрфактуалы, каузальный discovery, оценка эффектов"
+              agent-file: agents/education/ai-ml/ml-foundations/causal-inference-teacher.md
+              hours: 80
+              competencies:
+                - "Структурные каузальные модели и DAG"
+                - "do-исчисление и три правила Pearl"
+                - "Контрфактуалы и потенциальные исходы (Rubin)"
+                - "Оценка каузальных эффектов (PSM, IPW, IV, DiD, RDD)"
+                - "Каузальный discovery (PC, GES, NOTEARS)"
+                - "Каузальный ML (causal forests, meta-learners, DML)"
+
+        - id: nlp-speech
+          title: "Кафедра NLP и речевых технологий"
+          description: "Обработка естественного языка, адаптация LLM, распознавание и синтез речи"
+          head: nlp-speech-department-head
+          head-file: agents/education/ai-ml/nlp-speech/department-head.md
+
+          disciplines:
+            - name: nlp-teacher
+              title: "Обработка естественного языка"
+              description: "Классический и нейронный NLP — NER, parsing, machine translation, QA, summarization, text classification"
+              agent-file: agents/education/ai-ml/nlp-speech/nlp-teacher.md
+              hours: 100
+              competencies:
+                - "Лингвистический анализ: морфология, синтаксис, семантика"
+                - "NER, POS-tagging, dependency parsing"
+                - "Information extraction и relation extraction"
+                - "Text classification и sentiment analysis"
+                - "Machine translation и метрики (BLEU, COMET)"
+                - "Question answering и summarization"
+                - "NLP для русского языка (Natasha, DeepPavlov)"
+
+            - name: llm-finetuning-teacher
+              title: "Адаптация и дообучение LLM"
+              description: "LoRA, QLoRA, PEFT, подготовка данных, RLHF, DPO, evaluation и бенчмарки"
+              agent-file: agents/education/ai-ml/nlp-speech/llm-finetuning-teacher.md
+              hours: 80
+              competencies:
+                - "Полное дообучение: SFT, chat templates, multi-GPU"
+                - "Parameter-efficient: LoRA, QLoRA, prefix tuning, adapters"
+                - "Подготовка данных: curation, synthetic data, quality filtering"
+                - "RLHF: reward model, PPO, KL-penalty"
+                - "DPO, KTO, ORPO — альтернативы RLHF"
+                - "Evaluation: MMLU, MT-Bench, human eval, LLM-as-judge"
+                - "Практика: HuggingFace PEFT, Axolotl, Unsloth, model merging"
+
+            - name: speech-teacher
+              title: "Речевые технологии"
+              description: "ASR (Whisper, wav2vec), TTS (VITS, Bark), голосовое клонирование, обработка аудио"
+              agent-file: agents/education/ai-ml/nlp-speech/speech-teacher.md
+              hours: 80
+              competencies:
+                - "Обработка аудиосигнала: спектрограммы, mel, MFCC"
+                - "ASR: CTC, RNN-T, Whisper, Conformer"
+                - "TTS: Tacotron 2, FastSpeech 2, VITS, вокодеры (HiFi-GAN)"
+                - "Голосовое клонирование: speaker embeddings, zero-shot"
+                - "Speech-to-speech и мультимодальные модели"
+                - "Практика: librosa, torchaudio, Coqui TTS, faster-whisper"
+
+    - id: robotics
+      title: "Факультет робототехники"
+      description: "Робототехника — от математических основ и электроники до автономных систем"
+
+      departments:
+        - id: fundamentals
+          title: "Кафедра основ робототехники"
+          description: "Математика, кинематика, динамика, сенсоры, системы управления, электроника и микроконтроллеры"
+          head: robot-fundamentals-department-head
+          head-file: agents/education/robotics/fundamentals/department-head.md
+
+          disciplines:
+            - name: robot-math-teacher
+              title: "Математика для робототехники"
+              description: "SO(3)/SE(3), кватернионы, байесовская робототехника, нелинейная оптимизация, factor graphs"
+              agent-file: agents/education/robotics/fundamentals/robot-math-teacher.md
+              hours: 100
+              competencies:
+                - "Матрицы поворота и однородные преобразования"
+                - "Группы SO(3) и SE(3), экспоненциальные координаты"
+                - "Кватернионы и представления ориентации"
+                - "Байесовская фильтрация (Kalman, частицы)"
+                - "Нелинейная оптимизация (Gauss-Newton, Levenberg-Marquardt)"
+                - "Factor graphs и pose graphs"
+
+            - name: kinematics-dynamics-teacher
+              title: "Кинематика и динамика роботов"
+              description: "DH-параметры, прямая/обратная кинематика, якобианы, динамика манипуляторов, мобильные роботы"
+              agent-file: agents/education/robotics/fundamentals/kinematics-dynamics-teacher.md
+              hours: 80
+              competencies:
+                - "Системы координат и DH-параметры"
+                - "Прямая и обратная кинематика"
+                - "Якобианы и дифференциальная кинематика"
+                - "Динамика: Лагранж и Ньютон-Эйлер"
+                - "Кинематика мобильных роботов"
+                - "Параллельные механизмы"
+
+            - name: sensors-actuators-teacher
+              title: "Сенсоры и исполнительные механизмы"
+              description: "Лидары, камеры, IMU, электроприводы, сенсорная фузия (Kalman, EKF, UKF)"
+              agent-file: agents/education/robotics/fundamentals/sensors-actuators-teacher.md
+              hours: 60
+              competencies:
+                - "Принципы работы LiDAR и обработка облаков точек"
+                - "IMU: акселерометры, гироскопы, магнитометры"
+                - "Камеры: моно, стерео, depth, калибровка"
+                - "Электроприводы: DC, шаговые, servo, BLDC"
+                - "Сенсорная фузия (Kalman, EKF, UKF, комплементарные фильтры)"
+
+            - name: control-systems-teacher
+              title: "Системы управления"
+              description: "PID, пространство состояний, LQR, адаптивное и робастное управление, RTOS"
+              agent-file: agents/education/robotics/fundamentals/control-systems-teacher.md
+              hours: 80
+              competencies:
+                - "PID-регулятор: настройка, anti-windup, каскадное управление"
+                - "Частотный анализ: Bode, Nyquist, запасы устойчивости"
+                - "Пространство состояний: наблюдаемость, управляемость"
+                - "LQR и оптимальное управление"
+                - "Адаптивное и робастное управление"
+                - "Нелинейное управление (Lyapunov, sliding mode)"
+
+            - name: electronics-mcu-teacher
+              title: "Электроника и микроконтроллеры"
+              description: "Схемотехника, STM32, ESP32, протоколы I2C/SPI/UART/CAN, проектирование PCB"
+              agent-file: agents/education/robotics/fundamentals/electronics-mcu-teacher.md
+              hours: 60
+              competencies:
+                - "Анализ электрических цепей"
+                - "Цифровая логика и микроконтроллеры (ARM Cortex-M, ESP32)"
+                - "Протоколы связи (UART, SPI, I2C, CAN)"
+                - "Управление моторами и силовая электроника"
+                - "Проектирование PCB"
+                - "Embedded Linux для роботов"
+
+        - id: applied
+          title: "Кафедра прикладной робототехники"
+          description: "ROS 2, компьютерное зрение для роботов, планирование движения, SLAM, симуляция"
+          head: applied-robotics-department-head
+          head-file: agents/education/robotics/applied/department-head.md
+
+          disciplines:
+            - name: ros2-teacher
+              title: "ROS 2"
+              description: "Архитектура DDS, nodes, topics/services/actions, tf2, Navigation2, MoveIt 2, colcon"
+              agent-file: agents/education/robotics/applied/ros2-teacher.md
+              hours: 80
+              competencies:
+                - "Архитектура ROS 2 и DDS"
+                - "Nodes, executors, lifecycle"
+                - "Topics, services, actions с QoS"
+                - "tf2 и система координат"
+                - "Navigation2 stack"
+                - "MoveIt 2 для манипуляторов"
+
+            - name: robot-vision-teacher
+              title: "Компьютерное зрение для роботов"
+              description: "Стереозрение, визуальная одометрия, 3D-реконструкция, детекция и трекинг объектов"
+              agent-file: agents/education/robotics/applied/robot-vision-teacher.md
+              hours: 60
+              competencies:
+                - "Модели камер и калибровка"
+                - "Стереозрение и эпиполярная геометрия"
+                - "Визуальная одометрия (VO)"
+                - "3D-реконструкция"
+                - "Детекция и трекинг объектов (YOLO, DeepSORT)"
+                - "Visual servoing"
+
+            - name: motion-planning-teacher
+              title: "Планирование движения"
+              description: "C-space, RRT/PRM, A*/D*, MoveIt, behavior trees, multi-robot coordination"
+              agent-file: agents/education/robotics/applied/motion-planning-teacher.md
+              hours: 60
+              competencies:
+                - "Конфигурационное пространство и коллизии"
+                - "Sampling-based: RRT, RRT*, PRM"
+                - "Graph-based: A*, Dijkstra, D*"
+                - "MoveIt 2 планирование"
+                - "Behavior trees и FSM"
+                - "Multi-robot coordination"
+
+            - name: slam-teacher
+              title: "SLAM"
+              description: "LiDAR SLAM, визуальный SLAM, multi-sensor SLAM, graph-based оптимизация, loop closure"
+              agent-file: agents/education/robotics/applied/slam-teacher.md
+              hours: 80
+              competencies:
+                - "Фронтенд/бэкенд SLAM архитектура"
+                - "LiDAR SLAM (Cartographer, LOAM)"
+                - "Визуальный SLAM (ORB-SLAM3, VINS)"
+                - "Graph-based оптимизация (g2o, GTSAM)"
+                - "Loop closure detection"
+                - "Multi-sensor fusion SLAM"
+
+            - name: simulation-teacher
+              title: "Робототехническое моделирование"
+              description: "Gazebo, NVIDIA Isaac Sim, MuJoCo, sim-to-real transfer, цифровые двойники"
+              agent-file: agents/education/robotics/applied/simulation-teacher.md
+              hours: 60
+              competencies:
+                - "Gazebo/Ignition: URDF/SDF, плагины, сенсоры"
+                - "NVIDIA Isaac Sim и Omniverse"
+                - "MuJoCo для RL и контактной динамики"
+                - "Sim-to-real transfer и domain randomization"
+                - "Цифровые двойники"
+                - "HIL и SIL тестирование"
 
   # Межфакультетские программы
   cross-faculty-programs: []
-    # Пример:
-    #
-    # - id: bioinformatics
-    #   title: "Биоинформатика"
-    #   description: "Междисциплинарная программа на стыке IT и биологии"
-    #   faculties: [medicine, computer-science]
-    #   disciplines:
-    #     - neurobiology-teacher
-    #     - kotlin-teacher
-    #   hours: 200
-    #   competencies:
-    #     - "Анализ биологических данных"
-    #     - "Программирование для биологов"
