@@ -23,6 +23,14 @@
       "source": "../plugins/ai-university",
       "category": "education",
       "tags": ["education", "university", "ai-ml", "medicine", "teaching"]
+    },
+    {
+      "name": "project-coordinator",
+      "description": "Read-only project steward — holds the project vision, runs periodic pulses to collect unfinished work and drift, and proposes next steps for the user to pick",
+      "version": "1.0.0",
+      "source": "../plugins/project-coordinator",
+      "category": "productivity",
+      "tags": ["coordinator", "project-management", "steward", "pulse", "planning"]
     }
   ]
 }

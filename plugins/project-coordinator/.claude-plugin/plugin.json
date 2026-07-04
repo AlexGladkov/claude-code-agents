@@ -1,0 +1,19 @@
+{
+  "name": "project-coordinator",
+  "version": "1.0.0",
+  "description": "Project Coordinator — read-only project steward that holds the vision, runs periodic pulses, collects unfinished work and drift, and proposes next steps for the user to pick",
+  "author": {
+    "name": "Alex Gladkov",
+    "url": "https://github.com/AlexGladkov"
+  },
+  "repository": "https://github.com/AlexGladkov/claude-code-agents",
+  "license": "MIT",
+  "keywords": [
+    "coordinator",
+    "project-management",
+    "steward",
+    "pulse",
+    "backlog",
+    "planning"
+  ]
+}
