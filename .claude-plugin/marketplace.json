@@ -26,11 +26,11 @@
     },
     {
       "name": "project-coordinator",
-      "description": "Read-only project steward — holds the project vision, runs periodic pulses to collect unfinished work and drift, and proposes next steps for the user to pick",
-      "version": "1.0.0",
+      "description": "Read-only project steward — holds the vision, runs periodic pulses to collect unfinished work and drift, proposes next steps; plus autonomous YOLO night mode that works safely in an isolated branch while you sleep",
+      "version": "1.1.0",
       "source": "../plugins/project-coordinator",
       "category": "productivity",
-      "tags": ["coordinator", "project-management", "steward", "pulse", "planning"]
+      "tags": ["coordinator", "project-management", "steward", "pulse", "planning", "yolo", "autonomous"]
     }
   ]
 }

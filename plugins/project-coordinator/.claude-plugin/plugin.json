@@ -1,7 +1,7 @@
 {
   "name": "project-coordinator",
-  "version": "1.0.0",
-  "description": "Project Coordinator — read-only project steward that holds the vision, runs periodic pulses, collects unfinished work and drift, and proposes next steps for the user to pick",
+  "version": "1.1.0",
+  "description": "Project Coordinator — read-only project steward that holds the vision, runs periodic pulses, collects unfinished work and drift, and proposes next steps; plus an autonomous YOLO night mode that works safely in an isolated branch while you sleep",
   "author": {
     "name": "Alex Gladkov",
     "url": "https://github.com/AlexGladkov"
@@ -14,6 +14,8 @@
     "steward",
     "pulse",
     "backlog",
-    "planning"
+    "planning",
+    "yolo",
+    "autonomous"
   ]
 }
