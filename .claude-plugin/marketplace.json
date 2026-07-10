@@ -12,7 +12,7 @@
       "name": "ai-sdlc",
       "description": "AI-powered SDLC agents for Kotlin/Spring Boot backend and Compose Multiplatform development",
       "version": "1.0.0",
-      "source": "../plugins/ai-sdlc",
+      "source": "./plugins/ai-sdlc",
       "category": "development",
       "tags": ["kotlin", "spring-boot", "compose", "android", "sdlc"]
     },
@@ -20,7 +20,7 @@
       "name": "ai-university",
       "description": "AI University — virtual university with AI teaching agents for medicine, AI/ML, and more",
       "version": "1.0.0",
-      "source": "../plugins/ai-university",
+      "source": "./plugins/ai-university",
       "category": "education",
       "tags": ["education", "university", "ai-ml", "medicine", "teaching"]
     },
