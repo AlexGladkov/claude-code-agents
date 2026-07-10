@@ -23,6 +23,14 @@
       "source": "./plugins/ai-university",
       "category": "education",
       "tags": ["education", "university", "ai-ml", "medicine", "teaching"]
+    },
+    {
+      "name": "project-coordinator",
+      "description": "Entry point for any project — routes requests to profiles, tracks per-project profile-usage stats and suggests new profiles, holds the vision, runs periodic pulses, plus an autonomous YOLO night mode that works safely in an isolated branch while you sleep",
+      "version": "1.2.1",
+      "source": "../plugins/project-coordinator",
+      "category": "productivity",
+      "tags": ["coordinator", "project-management", "steward", "pulse", "planning", "yolo", "autonomous", "router", "stats"]
     }
   ]
 }

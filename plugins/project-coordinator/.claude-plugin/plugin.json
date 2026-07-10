@@ -1,0 +1,21 @@
+{
+  "name": "project-coordinator",
+  "version": "1.2.1",
+  "description": "Project Coordinator — the entry point for any project: routes requests to profiles, tracks per-project profile-usage stats and suggests new profiles, holds the vision, runs periodic pulses, and offers an autonomous YOLO night mode that works safely in an isolated branch while you sleep",
+  "author": {
+    "name": "Alex Gladkov",
+    "url": "https://github.com/AlexGladkov"
+  },
+  "repository": "https://github.com/AlexGladkov/claude-code-agents",
+  "license": "MIT",
+  "keywords": [
+    "coordinator",
+    "project-management",
+    "steward",
+    "pulse",
+    "backlog",
+    "planning",
+    "yolo",
+    "autonomous"
+  ]
+}
