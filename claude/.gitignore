@@ -10,3 +10,4 @@ plugins/*/generated/
 
 # OS
 .DS_Store
+.DS_Store
