@@ -15,10 +15,11 @@ export const meta = {
 //   cwd     : абсолютный путь корня проекта
 //   date    : YYYY-MM-DD (скрипт не имеет доступа к Date.now)
 //   slug    : basename репо/cwd
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve её переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents.

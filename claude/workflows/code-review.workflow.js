@@ -20,13 +20,14 @@ export const meta = {
 //   target       : 'pr:<N>' | 'branch' | 'staged'
 //   base         : базовая ветка для diff (для target=branch)
 //   postComments : постить ли инлайн-комменты в PR (только при target=pr:<N>)
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const TARGET = (args && args.target) || 'branch'
-const BASE = (args && args.base) || 'main'
-const POST_COMMENTS = !!(args && args.postComments)
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const TARGET = (A && A.target) || 'branch'
+const BASE = (A && A.base) || 'main'
+const POST_COMMENTS = !!(A && A.postComments)
 
 const PR_MATCH = /^pr:(.+)$/.exec(TARGET)
 const PR_NUMBER = PR_MATCH ? PR_MATCH[1] : null

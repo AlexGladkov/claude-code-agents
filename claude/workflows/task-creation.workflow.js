@@ -17,12 +17,13 @@ export const meta = {
 //   slug     : basename репо/cwd
 //   platform : 'github' | 'yandex'
 //   queue    : owner/repo (GitHub) или ключ очереди (Яндекс Трекер)
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const PLATFORM = (args && args.platform) || 'github'
-const QUEUE = (args && args.queue) || ''
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const PLATFORM = (A && A.platform) || 'github'
+const QUEUE = (A && A.queue) || ''
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve переопределяет
 // если в проектном CLAUDE.md есть секция ## Agents.

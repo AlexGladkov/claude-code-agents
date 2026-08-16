@@ -18,12 +18,13 @@ export const meta = {
 //   slug    : basename репо/cwd
 //   session : имя playwright-сессии для Web-валидации (решено в skill-гейте)
 //   target  : что редизайним (компонент/экран)
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const SESSION = (args && args.session) || SLUG
-const TARGET = (args && args.target) || REQUEST
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const SESSION = (A && A.session) || SLUG
+const TARGET = (A && A.target) || REQUEST
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve её переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents. Урезанный консилиум — только

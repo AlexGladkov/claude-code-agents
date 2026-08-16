@@ -22,13 +22,14 @@ export const meta = {
 //   mode           : 'audit-only' | 'apply'
 //   scope          : 'all' | 'backend' | 'mobile' | 'web' | <custom path>
 //   severityFilter : 'all' | 'critical+high' | 'critical-only'
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const MODE = (args && args.mode) || 'audit-only'
-const SCOPE = (args && args.scope) || 'all'
-const SEVERITY_FILTER = (args && args.severityFilter) || 'critical+high'
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const MODE = (A && A.mode) || 'audit-only'
+const SCOPE = (A && A.scope) || 'all'
+const SEVERITY_FILTER = (A && A.severityFilter) || 'critical+high'
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve переопределяет
 // если в проектном CLAUDE.md есть секция ## Agents.

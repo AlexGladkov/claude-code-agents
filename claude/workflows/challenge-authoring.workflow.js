@@ -19,12 +19,13 @@ export const meta = {
 //   slug    : basename репо/cwd
 //   session : имя playwright-сессии, зарезолвленное скиллом ДО запуска
 //   params  : { тема, дни, accessType, язык, уровень } — параметры челленджа из гейта
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const SESSION = (args && args.session) || SLUG
-const PARAMS = (args && args.params) || {}
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const SESSION = (A && A.session) || SLUG
+const PARAMS = (A && A.params) || {}
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve её переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents.

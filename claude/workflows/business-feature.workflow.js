@@ -19,11 +19,12 @@ export const meta = {
 //   date       : YYYY-MM-DD (скрипт не имеет доступа к Date.now)
 //   slug       : basename репо/cwd
 //   baseBranch : ветка, от которой бранчеваться (из гейта в skill)
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const BASE_BRANCH = (args && args.baseBranch) || 'main'
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const BASE_BRANCH = (A && A.baseBranch) || 'main'
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve её переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents.

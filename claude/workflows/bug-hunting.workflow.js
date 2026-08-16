@@ -23,13 +23,14 @@ export const meta = {
 //                 симптом существует, репро-фаза инструментирует и идёт в диагноз.
 //   e2eSession  : имя playwright-cli сессии (для web-e2e-валидации). Скилл резолвит ДО запуска
 //                 по правилам CLAUDE.md (Validation). Пусто → web-e2e через playwright пропускается.
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const MODE = (args && args.mode) || 'full-fix'
-const STABLE_REPRO = (args && args.stableRepro) === true
-const E2E_SESSION = (args && args.e2eSession) || ''
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const MODE = (A && A.mode) || 'full-fix'
+const STABLE_REPRO = (A && A.stableRepro) === true
+const E2E_SESSION = (A && A.e2eSession) || ''
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve её переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents.

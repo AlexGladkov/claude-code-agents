@@ -16,11 +16,12 @@ export const meta = {
 //   date    : YYYY-MM-DD (скрипт не имеет доступа к Date.now)
 //   slug    : basename репо/cwd
 //   flow    : описание пользовательского флоу для покрытия
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const FLOW = (args && args.flow) || REQUEST
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const FLOW = (A && A.flow) || REQUEST
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents.

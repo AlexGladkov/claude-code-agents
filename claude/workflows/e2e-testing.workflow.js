@@ -22,14 +22,15 @@ export const meta = {
 //   session   : имя playwright-сессии (решено skill интерактивно) | '' если Web не тестируем
 //   prodUrl   : prod URL проекта | '' если Web не тестируем
 //   mode      : 'fix-on-fail' | 'full-run'
-const REQUEST = (args && args.request) || ''
-const CWD = (args && args.cwd) || '.'
-const DATE = (args && args.date) || 'unknown-date'
-const SLUG = (args && args.slug) || 'project'
-const PLATFORMS = (args && args.platforms && args.platforms.length) ? args.platforms : ['Backend']
-const SESSION = (args && args.session) || ''
-const PROD_URL = (args && args.prodUrl) || ''
-const MODE = (args && args.mode) || 'fix-on-fail'
+const A = (typeof args === 'string') ? (JSON.parse(args) || {}) : (args || {})
+const REQUEST = (A && A.request) || ''
+const CWD = (A && A.cwd) || '.'
+const DATE = (A && A.date) || 'unknown-date'
+const SLUG = (A && A.slug) || 'project'
+const PLATFORMS = (A && A.platforms && args.platforms.length) ? args.platforms : ['Backend']
+const SESSION = (A && A.session) || ''
+const PROD_URL = (A && A.prodUrl) || ''
+const MODE = (A && A.mode) || 'fix-on-fail'
 
 const SCENARIO_PATH = `./swarm-report/${SLUG}-e2e-scenario.md`
 const REPORT_PATH = `./swarm-report/${SLUG}-${DATE}-e2e.md`
