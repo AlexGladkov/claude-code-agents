@@ -21,12 +21,15 @@ export const meta = {
 //   stableRepro : bool — юзер утверждает СТАБИЛЬНОЕ репро (скилл ставит true при явном
 //                 «стабильно/каждый раз/всегда»). Тогда гейт НЕ бейлит на not-reproducible —
 //                 симптом существует, репро-фаза инструментирует и идёт в диагноз.
+//   e2eSession  : имя playwright-cli сессии (для web-e2e-валидации). Скилл резолвит ДО запуска
+//                 по правилам CLAUDE.md (Validation). Пусто → web-e2e через playwright пропускается.
 const REQUEST = (args && args.request) || ''
 const CWD = (args && args.cwd) || '.'
 const DATE = (args && args.date) || 'unknown-date'
 const SLUG = (args && args.slug) || 'project'
 const MODE = (args && args.mode) || 'full-fix'
 const STABLE_REPRO = (args && args.stableRepro) === true
+const E2E_SESSION = (args && args.e2eSession) || ''
 
 // Дефолтная карта роль→агент (из глобального CLAUDE.md). Resolve её переопределяет,
 // если в проектном CLAUDE.md есть секция ## Agents.
@@ -124,10 +127,28 @@ const FIX_SCHEMA = {
 const VALIDATE_SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['passed', 'details'],
+  required: ['passed', 'buildPassed', 'buildCommand', 'buildExitCode', 'buildEvidence', 'testsPassed', 'testsEvidence', 'details'],
   properties: {
-    passed: { type: 'boolean' },
-    details: { type: 'string' },
+    passed: { type: 'boolean', description: 'Итог = buildPassed && testsPassed. НЕ ставить true без реальных доказательств ниже' },
+    buildPassed: { type: 'boolean' },
+    buildCommand: { type: 'string', description: 'Точная команда сборки (как запускал)' },
+    buildExitCode: { type: 'integer', description: 'Реальный код возврата сборки (0 = успех). НЕ маскировать через | tail/| grep — использовать set -o pipefail или $?' },
+    buildEvidence: { type: 'string', description: 'РЕАЛЬНЫЙ хвост вывода: строка BUILD SUCCEEDED / BUILD FAILED / BUILD SUCCESSFUL / ошибки компиляции. Дословно из лога.' },
+    testsPassed: { type: 'boolean' },
+    testsEvidence: { type: 'string', description: 'РЕАЛЬНАЯ строка итога тестов ("Executed N tests, 0 failures" / "N passed" / "FAILED"). Дословно.' },
+    details: { type: 'string', description: 'Что запускал, симптом воспроизводится ли ещё, регрессии' },
+  },
+}
+
+const E2E_VALIDATE_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['ran', 'passed', 'platform', 'evidence'],
+  properties: {
+    ran: { type: 'boolean', description: 'Реально ли прогнан UI/E2E кейс на живом приложении. false = не прогнан (нет сессии/приложения) — тогда passed НЕ считается пройденным, а честно skipped' },
+    passed: { type: 'boolean', description: 'Симптом на живом приложении устранён (только если ran=true)' },
+    platform: { type: 'string', description: 'web | android | ios | desktop | backend | none' },
+    evidence: { type: 'string', description: 'Что именно дёргал (шаги пользователя по фиче), инструмент (playwright-cli/mobile MCP/desktop), наблюдаемый результат (snapshot/screenshot ref). Если ran=false — честная причина.' },
   },
 }
 
@@ -248,36 +269,87 @@ const fixes = (await parallel(fixAgents.map((t) => () =>
 ))).filter(Boolean)
 
 // ── Phase 4: Validate ─────────────────────────────────────────────────────
+// Два независимых валидатора идут параллельно: (1) evidence-based сборка+тесты,
+// (2) E2E-прогон реального кейса фичи на живом приложении. Оба ОБЯЗАНЫ прикладывать
+// реальные доказательства — самоотчёт «прошло» без вывода не принимается.
 phase('Validate')
-const validation = await agent(
-  `Проект: ${CWD}. Провалидируй фикс бага "${REQUEST}".
-Изменённые файлы: ${JSON.stringify(fixes.flatMap((f) => f.changedFiles || []))}.
-Запусти сборку и юнит-тесты через Bash (найди gradle/скрипт проекта). Убедись,
-что симптом из репро (${repro.summary}) больше не воспроизводится и нет регрессий.
-Верни passed + детали (что запускал, вывод).`,
-  { label: 'validate', phase: 'Validate', schema: VALIDATE_SCHEMA, model: 'sonnet' }
-)
+const changedFiles = fixes.flatMap((f) => f.changedFiles || [])
+const validationLayers = (diagnosis && diagnosis.fixLayers && diagnosis.fixLayers.length)
+  ? diagnosis.fixLayers
+  : (repro.layers || [])
+
+const [validation, e2e] = await parallel([
+  () => agent(
+    `Проект: ${CWD}. Провалидируй фикс бага "${REQUEST}" — СБОРКА + ЮНИТ-ТЕСТЫ.
+Изменённые файлы: ${JSON.stringify(changedFiles)}.
+
+СТРОГО (иначе валидация недостоверна — был случай, когда агент соврал «BUILD SUCCEEDED», а сборка падала):
+1. Найди систему сборки проекта (gradle/xcodebuild/swift build/npm/Makefile) сам.
+2. Запусти сборку в Bash так, чтобы ПОЛУЧИТЬ РЕАЛЬНЫЙ EXIT CODE — НЕ маскируй через
+   \`| tail\`/\`| grep\` (пайп отдаёт код последней команды!). Используй \`set -o pipefail\`
+   ИЛИ пиши вывод в файл и отдельно \`echo $?\`, потом grep по файлу.
+3. Прочитай реальную строку-маркер (BUILD SUCCEEDED / BUILD FAILED / BUILD SUCCESSFUL /
+   FAILURE / error:) и впиши её ДОСЛОВНО в buildEvidence. Верни buildExitCode как есть.
+4. buildPassed=true ТОЛЬКО если exitCode==0 И маркер успеха присутствует. Иначе false.
+5. Прогони юнит-тесты аналогично; впиши дословную строку итога ("Executed N tests, 0 failures"
+   и т.п.) в testsEvidence. testsPassed по факту.
+6. passed = buildPassed && testsPassed. Проверь, что симптом (${repro.summary}) устранён.
+Врать про прохождение ЗАПРЕЩЕНО — прикладывай только реальный вывод.`,
+    { label: 'validate:build', phase: 'Validate', schema: VALIDATE_SCHEMA, model: 'sonnet' }
+  ),
+  () => agent(
+    `Проект: ${CWD}. E2E-ВАЛИДАЦИЯ фикса бага "${REQUEST}" на ЖИВОМ приложении.
+Затронутые слои: ${JSON.stringify(validationLayers)}. Изменённые файлы: ${JSON.stringify(changedFiles)}.
+Симптом для проверки: ${repro.summary}
+
+Задача — прогнать РЕАЛЬНЫЙ пользовательский кейс по затронутой фиче и убедиться, что симптом
+ушёл, а не только «код собрался». Определи платформу по затронутым файлам/слоям и возьми инструмент:
+- Любое ПРИЛОЖЕНИЕ (mobile И desktop: Android / iOS / macOS/desktop, Compose/SwiftUI/AppKit/etc)
+  → «Claude in mobile» = mobile MCP (единый драйвер всех app-платформ). Через ToolSearch подними
+  mcp__mobile__* (device/app/ui/screen/input) ИЛИ skill-обёртки /test-android, /test-ios, /test-desktop
+  через Bash. Собери/запусти приложение, пройди шаги фичи, сними ui-tree/screenshot.
+- Web (webApp/**, *.vue, *.ts) → playwright-cli через Bash. Сессия: "${E2E_SESSION || '(не передана)'}".
+  Сессия пуста — НЕ открывай новый браузер, верни ran=false с причиной. Есть →
+  \`playwright-cli -s=${E2E_SESSION || '<session>'} goto/snapshot/click/screenshot\`, пройди кейс.
+- Backend → curl/httpie реальные запросы по фиче.
+Приложи РЕАЛЬНЫЕ наблюдения (ui-tree/snapshot/screenshot ref, ответ сервера) в evidence.
+ЧЕСТНО: если живьём прогнать нельзя (нет сессии/устройства/деплоя) — ran=false + причина;
+НЕ выдавай build-only за e2e. НЕ выводи окно на передний план (osascript и т.п. запрещены).`,
+    { label: 'validate:e2e', phase: 'Validate', schema: E2E_VALIDATE_SCHEMA, model: 'sonnet' }
+  ),
+])
 
 // ── Phase 5: Report ───────────────────────────────────────────────────────
 phase('Report')
 const reportPath = `./swarm-report/${SLUG}-${DATE}-bug.md`
+const buildTestsOk = !!(validation && validation.passed)
+const e2eOk = !!(e2e && e2e.ran && e2e.passed)
+const e2eSkipped = !e2e || e2e.ran === false
+const overallStatus = buildTestsOk
+  ? (e2eOk ? 'fixed' : (e2eSkipped ? 'fixed-e2e-skipped' : 'fixed-e2e-failed'))
+  : 'fix-unverified'
+
 await agent(
   `Напиши финальный отчёт в файл ${CWD}/${reportPath} (Write).
 "# Bug Report — ${DATE}". Запрос: "${REQUEST}".
 Репро: ${JSON.stringify(repro)}.
 Диагноз (root cause + кластер): ${JSON.stringify(diagnosis)}.
 Фиксы: ${JSON.stringify(fixes)}.
-Валидация: ${JSON.stringify(validation)}.
-Статус: ${validation && validation.passed ? 'Done' : 'Partial — валидация не прошла'}.
-Структура: симптом, root cause, что изменено (файлы), результат валидации, риски/откаты.`,
+Валидация сборка+тесты (с реальными доказательствами): ${JSON.stringify(validation)}.
+E2E на живом приложении: ${JSON.stringify(e2e)}.
+Статус: ${overallStatus}.
+Структура: симптом, root cause, что изменено (файлы), результат валидации (ПРИВЕДИ реальные
+build/test маркеры и e2e-наблюдения дословно), риски/откаты. Если e2e не прогнан — явно отметь
+что фича живьём НЕ проверена и это нужно сделать вручную.`,
   { label: 'report', phase: 'Report', model: 'haiku' }
 )
 
 return {
-  status: validation && validation.passed ? 'fixed' : 'fix-unverified',
+  status: overallStatus,
   repro,
   diagnosis,
   fixes,
   validation,
+  e2e,
   report: reportPath,
 }
